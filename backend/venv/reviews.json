@@ -1,0 +1,191 @@
+{
+    "reviews": [
+      {
+        "professor": "Prof2",
+        "review": "Engaging lectures and always available for help.",
+        "subject": "Physics",
+        "stars": 4
+      },
+      {
+        "professor": "Prof3",
+        "review": "Very knowledgeable, but assignments are tough.",
+        "subject": "Chemistry",
+        "stars": 3
+      },
+      {
+        "professor": "Prof4",
+        "review": "Encourages critical thinking and deep understanding.",
+        "subject": "Philosophy",
+        "stars": 5
+      },
+      {
+        "professor": "Prof5",
+        "review": "Good, but lectures can be a bit monotonous.",
+        "subject": "Biology",
+        "stars": 3
+      },
+      {
+        "professor": "Prof6",
+        "review": "Excellent teaching style and very approachable.",
+        "subject": "History",
+        "stars": 5
+      },
+      {
+        "professor": "Prof7",
+        "review": "Punctual and provides great resources.",
+        "subject": "English",
+        "stars": 4
+      },
+      {
+        "professor": "Prof8",
+        "review": "Makes the subject interesting and fun.",
+        "subject": "Psychology",
+        "stars": 5
+      },
+      {
+        "professor": "Prof9",
+        "review": "Tough grader, but you learn a lot.",
+        "subject": "Economics",
+        "stars": 4
+      },
+      {
+        "professor": "Prof10",
+        "review": "Difficult to follow, needs more clarity.",
+        "subject": "Statistics",
+        "stars": 2
+      },
+      {
+        "professor": "Prof11",
+        "review": "Very supportive and understanding.",
+        "subject": "Sociology",
+        "stars": 5
+      },
+      {
+        "professor": "Prof12",
+        "review": "Sometimes hard to get hold of, but helpful.",
+        "subject": "Computer Science",
+        "stars": 4
+      },
+      {
+        "professor": "Prof13",
+        "review": "Always provides real-world examples.",
+        "subject": "Engineering",
+        "stars": 5
+      },
+      {
+        "professor": "Prof14",
+        "review": "A bit disorganized, but overall good.",
+        "subject": "Art",
+        "stars": 3
+      },
+      {
+        "professor": "Prof15",
+        "review": "Challenges you to think outside the box.",
+        "subject": "Political Science",
+        "stars": 5
+      },
+      {
+        "professor": "Prof16",
+        "review": "Great at explaining complex topics.",
+        "subject": "Mathematics",
+        "stars": 5
+      },
+      {
+        "professor": "Prof17",
+        "review": "Could use more examples during lectures.",
+        "subject": "Physics",
+        "stars": 3
+      },
+      {
+        "professor": "Prof18",
+        "review": "Super engaging and always interesting.",
+        "subject": "Literature",
+        "stars": 5
+      },
+      {
+        "professor": "Prof19",
+        "review": "A bit too fast-paced for my liking.",
+        "subject": "Chemistry",
+        "stars": 3
+      },
+      {
+        "professor": "Prof20",
+        "review": "Really cares about students' success.",
+        "subject": "Philosophy",
+        "stars": 5
+      },
+      {
+        "professor": "Prof21",
+        "review": "Sometimes unclear, but passionate about the subject.",
+        "subject": "Biology",
+        "stars": 4
+      },
+      {
+        "professor": "Prof22",
+        "review": "Assignments are heavy, but learned a lot.",
+        "subject": "History",
+        "stars": 4
+      },
+      {
+        "professor": "Prof23",
+        "review": "Interesting lectures but exams are tough.",
+        "subject": "Psychology",
+        "stars": 3
+      },
+      {
+        "professor": "Prof24",
+        "review": "Goes above and beyond to help students.",
+        "subject": "Sociology",
+        "stars": 5
+      },
+      {
+        "professor": "Prof25",
+        "review": "Good professor, but can be strict.",
+        "subject": "English",
+        "stars": 4
+      },
+      {
+        "professor": "Prof26",
+        "review": "Explains concepts clearly and concisely.",
+        "subject": "Statistics",
+        "stars": 5
+      },
+      {
+        "professor": "Prof27",
+        "review": "Sometimes hard to follow, but overall decent.",
+        "subject": "Economics",
+        "stars": 3
+      },
+      {
+        "professor": "Prof28",
+        "review": "Great professor, makes learning enjoyable.",
+        "subject": "Computer Science",
+        "stars": 5
+      },
+      {
+        "professor": "Prof29",
+        "review": "Could be more organized, but knowledgeable.",
+        "subject": "Engineering",
+        "stars": 4
+      },
+      {
+        "professor": "Prof30",
+        "review": "Explains well, but lectures are long.",
+        "subject": "Mathematics",
+        "stars": 4
+      },
+      {
+        "professor": "Prof31",
+        "review": "Always willing to help and clarify doubts.",
+        "subject": "Art",
+        "stars": 5
+      },
+      {
+        "professor": "Prof32",
+        "review": "Engages students in discussions effectively.",
+        "subject": "Political Science",
+        "stars": 5
+      }
+    ]
+  }
+  
