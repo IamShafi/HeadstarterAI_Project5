@@ -1,14 +1,15 @@
-# Modern UI/UX website using Next.js, TypeScript & Tailwind CSS
+# RAG AI Chatbot
 
 <div id="top"></div>
 
 <div align="center">
 
- <img src="https://github.com/IamShafi/Figma-to-Next.js-typescript-tailwindcss--project_brainwave/blob/master/assets/mockup.png"/>
+ <img src="https://github.com/IamShafi/Figma-to-Next.js-typescript-tailwindcss--project_brainwave/blob/master/assets/Create-Next-App.png"/>
 
 > ~
 >
-> <h3 align="center">Figma to Next.js</h3>
+> <h3 align="center">Project 5: AI Chatbot</h3>
+> <p align="center">This project focuses on building a powerful AI chatbot utilizing a vector search engine (Pinecone is a recommended option) for data storage and retrieval. The chatbot's functionality can be tailored to various use cases, providing users with an interactive and informative experience.</p>
 
 > <p align="center">
 >   <img src="https://img.shields.io/badge/NextJS-black?style=for-the-badge&logo=next.js&logoColor=white" />
@@ -19,9 +20,3 @@
 
 </div>
 
- 
-Case Study: As a front-end developer, I undertook the challenge of converting a complex Figma design into a fully operational and responsive webpage.
-
-Objective: The main goal was to accurately transform the visual elements and interactive features of the Figma design into a responsive webpage, ensuring precise alignment with the original design and smooth adaptability across different screen sizes and devices.
-
-Technology Stack: This project leveraged Next.js and TailwindCSS to faithfully recreate the Figma design.
