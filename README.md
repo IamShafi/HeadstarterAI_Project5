@@ -4,7 +4,7 @@
 
 <div align="center">
 
- <img src="https://github.com/IamShafi/Figma-to-Next.js-typescript-tailwindcss--project_brainwave/blob/master/assets/Create-Next-App.png"/>
+ <img src="https://github.com/IamShafi/HeadstarterAI_Project5/blob/main/assets/Create-Next-App.png"/>
 
 > ~
 >
@@ -15,6 +15,9 @@
 >   <img src="https://img.shields.io/badge/NextJS-black?style=for-the-badge&logo=next.js&logoColor=white" />
 >   <img src="https://img.shields.io/badge/TailwindCSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" />
 >   <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" />
+>   <img src="https://img.shields.io/badge/Pinecone-orange?style=for-the-badge&logo=pinecone&logoColor=white" />
+>   <img src="https://img.shields.io/badge/OpenAI-412991?style=for-the-badge&logo=openai&logoColor=white" />
+
 > </p>
 > ~
 
