@@ -42,7 +42,7 @@ const Header = () => {
       <div className="flex items-center px-5 lg:px-7.5 xl:px-10 max-lg:py-4">
         <Link className="block w-[12rem] xl:mr-8" href="/">
           {/* <Image src={brainwave} width={190} height={40} alt="Brainwave" /> */}
-          <h1 className="text-white text-[21px]">AUST GenAI</h1>
+          <h1 className="text-white text-[21px]">RateMyProf AI</h1>
         </Link>
 
         <nav
