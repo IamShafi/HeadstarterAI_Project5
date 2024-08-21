@@ -1,0 +1,124 @@
+{
+  "reviews": [
+    {
+      "professor": "Dr. John Smith",
+      "subject": "Introduction to Psychology",
+      "stars": 4,
+      "review": "Great professor, explains concepts clearly and is very approachable."
+    },
+    {
+      "professor": "Dr. Emily Johnson",
+      "subject": "Calculus I",
+      "stars": 5,
+      "review": "Challenging class, but Dr. Johnson is excellent at breaking down difficult topics."
+    },
+    {
+      "professor": "Dr. Michael Brown",
+      "subject": "Organic Chemistry",
+      "stars": 3,
+      "review": "The course material is tough, but Dr. Brown is always willing to help during office hours."
+    },
+    {
+      "professor": "Prof. Laura Williams",
+      "subject": "World History",
+      "stars": 4,
+      "review": "Engaging lectures, though the exams are a bit difficult."
+    },
+    {
+      "professor": "Dr. James Taylor",
+      "subject": "Introduction to Computer Science",
+      "stars": 5,
+      "review": "Amazing professor, very knowledgeable and passionate about the subject."
+    },
+    {
+      "professor": "Prof. Sarah Miller",
+      "subject": "English Literature",
+      "stars": 4,
+      "review": "Very insightful and encourages deep thinking, but grades tough."
+    },
+    {
+      "professor": "Dr. Robert Anderson",
+      "subject": "Physics I",
+      "stars": 3,
+      "review": "Good lectures, but sometimes hard to follow. Recitations are helpful."
+    },
+    {
+      "professor": "Prof. Jennifer Thomas",
+      "subject": "Sociology 101",
+      "stars": 4,
+      "review": "Interesting class, very interactive and lots of group discussions."
+    },
+    {
+      "professor": "Dr. William Moore",
+      "subject": "Microeconomics",
+      "stars": 2,
+      "review": "Course material is hard to grasp, and the professor’s teaching style is a bit confusing."
+    },
+    {
+      "professor": "Prof. Linda Martinez",
+      "subject": "Spanish I",
+      "stars": 5,
+      "review": "Excellent language teacher, makes learning Spanish fun and engaging."
+    },
+    {
+      "professor": "Dr. Kevin Clark",
+      "subject": "Philosophy 101",
+      "stars": 3,
+      "review": "Interesting content but the professor can be a bit dry in lectures."
+    },
+    {
+      "professor": "Prof. Barbara Lewis",
+      "subject": "Statistics",
+      "stars": 4,
+      "review": "Good at explaining concepts, but the workload is heavy."
+    },
+    {
+      "professor": "Dr. Daniel Walker",
+      "subject": "Biology II",
+      "stars": 5,
+      "review": "Fantastic professor, really cares about his students' success."
+    },
+    {
+      "professor": "Prof. Angela Hall",
+      "subject": "Marketing 101",
+      "stars": 3,
+      "review": "Decent course, but assignments are not always clearly explained."
+    },
+    {
+      "professor": "Dr. Matthew Allen",
+      "subject": "Political Science",
+      "stars": 4,
+      "review": "Engaging discussions and thought-provoking assignments."
+    },
+    {
+      "professor": "Prof. Nancy Young",
+      "subject": "Art History",
+      "stars": 5,
+      "review": "Passionate about the subject, her enthusiasm makes the class enjoyable."
+    },
+    {
+      "professor": "Dr. Christopher Hernandez",
+      "subject": "Advanced Calculus",
+      "stars": 2,
+      "review": "Very difficult class, and the professor is not very approachable."
+    },
+    {
+      "professor": "Prof. Karen King",
+      "subject": "Business Law",
+      "stars": 4,
+      "review": "Very knowledgeable and provides real-world examples, but exams are tough."
+    },
+    {
+      "professor": "Dr. Anthony Scott",
+      "subject": "Chemistry II",
+      "stars": 3,
+      "review": "Good professor, but the material is very challenging."
+    },
+    {
+      "professor": "Prof. Patricia Green",
+      "subject": "Creative Writing",
+      "stars": 5,
+      "review": "Amazing class, Prof. Green really pushes you to develop your writing skills."
+    }
+  ]
+}
