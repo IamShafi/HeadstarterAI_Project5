@@ -1,0 +1,125 @@
+{
+    "reviews": [
+      {
+        "professor": "Marie Curie",
+        "subject": "Physics",
+        "overallRating": 4.5,
+        "review": "Inspiring teacher with a passion for radioactivity. Lab work is extensive but rewarding."
+      },
+      {
+        "professor": "Albert Einstein",
+        "subject": "Theoretical Physics",
+        "overallRating": 4.9,
+        "review": "Exceptional lectures on relativity. Complex material but explained very well."
+      },
+      {
+        "professor": "Isaac Newton",
+        "subject": "Calculus",
+        "overallRating": 4.7,
+        "review": "Great insights into calculus. The coursework is challenging but worth it."
+      },
+      {
+        "professor": "Ada Lovelace",
+        "subject": "Computer Science",
+        "overallRating": 4.8,
+        "review": "Pioneering ideas in computing. Her approach to teaching is methodical and clear."
+      },
+      {
+        "professor": "Charles Darwin",
+        "subject": "Biology",
+        "overallRating": 4.4,
+        "review": "Engaging lectures on evolution. Field trips are a highlight of the course."
+      },
+      {
+        "professor": "Rosalind Franklin",
+        "subject": "Molecular Biology",
+        "overallRating": 4.6,
+        "review": "Excellent course on DNA. Her attention to detail in lab sessions is incredible."
+      },
+      {
+        "professor": "Nikola Tesla",
+        "subject": "Electrical Engineering",
+        "overallRating": 4.7,
+        "review": "Innovative teaching style. Labs are intensive but very educational."
+      },
+      {
+        "professor": "Alan Turing",
+        "subject": "Cryptography",
+        "overallRating": 4.9,
+        "review": "Brilliant insights into cryptography. Challenging assignments but very rewarding."
+      },
+      {
+        "professor": "Galileo Galilei",
+        "subject": "Astronomy",
+        "overallRating": 4.5,
+        "review": "Fascinating lectures on the solar system. Observational sessions are fantastic."
+      },
+      {
+        "professor": "Leonardo da Vinci",
+        "subject": "Engineering",
+        "overallRating": 4.8,
+        "review": "Creative and interdisciplinary approach. Projects are complex but engaging."
+      },
+      {
+        "professor": "Gregor Mendel",
+        "subject": "Genetics",
+        "overallRating": 4.4,
+        "review": "Very clear explanations of genetic principles. The lab work is a bit tedious."
+      },
+      {
+        "professor": "Florence Nightingale",
+        "subject": "Nursing",
+        "overallRating": 4.7,
+        "review": "Compassionate and knowledgeable. The practical sessions are very hands-on."
+      },
+      {
+        "professor": "Alexander Fleming",
+        "subject": "Microbiology",
+        "overallRating": 4.5,
+        "review": "Interesting course on antibiotics. Labs are well-organized but challenging."
+      },
+      {
+        "professor": "James Clerk Maxwell",
+        "subject": "Electromagnetism",
+        "overallRating": 4.6,
+        "review": "Deep understanding of electromagnetism. Lectures are thorough but fast-paced."
+      },
+      {
+        "professor": "Rachel Carson",
+        "subject": "Environmental Science",
+        "overallRating": 4.8,
+        "review": "Passionate about environmental conservation. The course projects are very impactful."
+      },
+      {
+        "professor": "Richard Feynman",
+        "subject": "Quantum Mechanics",
+        "overallRating": 4.9,
+        "review": "Dynamic and engaging lectures. Complex topics made accessible."
+      },
+      {
+        "professor": "Carl Linnaeus",
+        "subject": "Botany",
+        "overallRating": 4.3,
+        "review": "Organized and systematic approach. The classification labs are very detailed."
+      },
+      {
+        "professor": "Dorothy Hodgkin",
+        "subject": "Chemistry",
+        "overallRating": 4.6,
+        "review": "Great teacher with a focus on crystallography. Labs are difficult but rewarding."
+      },
+      {
+        "professor": "Erwin Schrödinger",
+        "subject": "Quantum Physics",
+        "overallRating": 4.8,
+        "review": "Mind-bending lectures on quantum theory. Requires a strong math background."
+      },
+      {
+        "professor": "Niels Bohr",
+        "subject": "Atomic Physics",
+        "overallRating": 4.7,
+        "review": "Complex topics explained in a simple manner. The coursework is challenging but manageable."
+      }
+    ]
+  }
+  

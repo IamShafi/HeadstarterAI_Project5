@@ -8,7 +8,7 @@ export async function POST(req: NextRequest) {
   try {
     // Initialize the OpenAI & Pinecone client with the API key from environment variables
     const pc = new Pinecone({
-      apiKey: process.env.PINECONE_API_KEY,
+      apiKey: process.env.PINECONE_API_KEY!,
     });
     const openai = new OpenAI();
     // Define the Pinecone index and namespace to use for storing the data
