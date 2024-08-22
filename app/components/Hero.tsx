@@ -42,7 +42,7 @@ const Hero = () => {
             <p className="body-1 max-w-3xl mx-auto mb-6 text-n-2 lg:mb-8">
             Discover detailed ratings and insights to help you choose the best instructors.
             </p>
-            <Button href="/pricing" white>
+            <Button href="/chat" white>
               Get started
             </Button>
           </div>
