@@ -3,7 +3,7 @@ import React from "react";
 interface ChatData {
   avatarSrc: string;
   message: string;
-  isAI: boolean;
+  isUser: boolean;
 }
 
 const chatData: ChatData[] = [
@@ -12,26 +12,32 @@ const chatData: ChatData[] = [
       "https://cdn.builder.io/api/v1/image/assets/TEMP/b9a8045f6c5b09fb97ec2c7ffcdd248c2c7f6e52ed1a248260ca35945e2d0a32?placeholderIfAbsent=true&apiKey=cbce17c6bd5a4e1b9d426321669347ae",
     message:
       "Hello! I'm your AI Assistant. How can I assist you today? Ask me about professors or use the advanced search for personalized recommendations.",
-    isAI: false,
+    isUser: false,
   },
   {
     avatarSrc:
       "https://cdn.builder.io/api/v1/image/assets/TEMP/7aaa8dde10ab825b3a6aa7165cc08ef183a165349d2d6042dd1b14e84f78f70f?placeholderIfAbsent=true&apiKey=cbce17c6bd5a4e1b9d426321669347ae",
     message: "what does professor alex teaches?",
-    isAI: true,
+    isUser: true,
   },
   {
     avatarSrc:
       "https://cdn.builder.io/api/v1/image/assets/TEMP/c7ab6026bc6d93776bb8ca3f58878398ce5e4f29ce0e7d923231c24e93ca4555?placeholderIfAbsent=true&apiKey=cbce17c6bd5a4e1b9d426321669347ae",
-    message: "How to open my jam bottle?",
-    isAI: false,
+    message: "Professor Alex teach Computer Science at MIT",
+    isUser: false,
   },
   {
     avatarSrc:
       "https://cdn.builder.io/api/v1/image/assets/TEMP/3e6b6ae76d2b7bcf41bb15efdc0632f6715d7574abe6b72aca9c6c6bbf286452?placeholderIfAbsent=true&apiKey=cbce17c6bd5a4e1b9d426321669347ae",
     message:
-      "Make sure your hands are dry, then grip the lid firmly and twist it while holding the bottle with your other hand. This should give you enough leverage to loosen the lid.",
-    isAI: true,
+      "Who else teaches Computer Science?",
+    isUser: true,
+  },
+  {
+    avatarSrc:
+      "https://cdn.builder.io/api/v1/image/assets/TEMP/c7ab6026bc6d93776bb8ca3f58878398ce5e4f29ce0e7d923231c24e93ca4555?placeholderIfAbsent=true&apiKey=cbce17c6bd5a4e1b9d426321669347ae",
+    message: "Professor Shafi & tintoy also teaches Computer Science at MIT",
+    isUser: false,
   },
 ];
 
@@ -44,7 +50,7 @@ const ChatInterface: React.FC = () => {
             <div
               key={index}
               className={`flex overflow-hidden ${
-                chat.isAI
+                chat.isUser
                   ? "flex-wrap gap-5 items-start self-end py-3 pr-3.5 pl-6 mt-7 leading-7 text-black bg-violet-300 rounded-3xl  max-md:pl-5"
                   : "gap-6 items-center self-start px-6 py-3 rounded-tr-4 min-h-[87px] bg-slate-600 mt-[16px] max-md:px-5"
               }`}
@@ -52,16 +58,16 @@ const ChatInterface: React.FC = () => {
               <img
                 loading="lazy"
                 src={chat.avatarSrc}
-                alt={chat.isAI ? "AI Avatar" : "User Avatar"}
+                alt={chat.isUser ? "AI Avatar" : "User Avatar"}
                 className={`object-contain shrink-0 ${
-                  chat.isAI
+                  chat.isUser
                     ? "aspect-[0.86] w-[43px]"
                     : "self-stretch my-auto aspect-[1.05] rounded-[99px] w-[66px]"
                 }`}
               />
               <div
                 className={`${
-                  chat.isAI
+                  chat.isUser
                     ? "grow shrink w-[550px] max-md:max-w-full"
                     : "self-stretch my-auto"
                 }`}

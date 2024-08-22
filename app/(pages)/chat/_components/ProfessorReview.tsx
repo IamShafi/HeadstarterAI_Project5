@@ -79,7 +79,7 @@ const ProfessorReview: React.FC = () => {
               type="text"
               id="professor-name"
               placeholder="Enter Professor Name"
-              className="overflow-hidden text-[18px] grow shrink self-stretch px-4 py-2.5 my-auto text-base leading-tight text-black bg-[#ADA8C4] rounded-lg w-[191px] max-md:px-5 placeholder-white"
+              className="overflow-hidden text-[18px] grow shrink self-stretch px-4 py-2.5 my-auto text-base leading-tight text-black bg-[#ADA8C4] rounded-lg w-[200px] max-md:px-5 placeholder-white"
             />
           </div>
           <textarea
