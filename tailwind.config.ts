@@ -61,7 +61,7 @@ const config: Config = {
         DEFAULT: "linear",
       },
       screens: {
-        'xl': '1440px', // Add this line
+        'xl': '1144px', // Add this line
       },
       zIndex: {
         1: "1",

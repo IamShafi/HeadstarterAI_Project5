@@ -85,7 +85,7 @@ const ProfessorReview: React.FC = () => {
           <textarea
             id="professor-review"
             placeholder="Write your review for this professor"
-            className="overflow-hidden text-[24px] px-6 pt-5 pb-20 mt-8 text-base leading-tight text-black bg-gray-400 rounded-2xl max-md:px-5 max-md:max-w-full w-full"
+            className="overflow-hidden text-[24px] px-6 pt-5 pb-20 mt-8 text-base leading-tight text-black bg-gray-400 rounded-2xl max-md:px-5 max-md:max-w-full w-full placeholder-white"
           />
         </form>
         <button className="overflow-hidden self-center px-16 py-3.5 mt-4 max-w-full text-2xl font-semibold leading-tight text-white whitespace-nowrap bg-red-400 rounded-2xl w-[372px] max-md:px-5">
