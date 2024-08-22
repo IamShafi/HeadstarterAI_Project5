@@ -60,6 +60,9 @@ const config: Config = {
       transitionTimingFunction: {
         DEFAULT: "linear",
       },
+      screens: {
+        'xl': '1440px', // Add this line
+      },
       zIndex: {
         1: "1",
         2: "2",
@@ -69,6 +72,9 @@ const config: Config = {
       },
       borderWidth: {
         DEFAULT: "0.0625rem",
+      },
+      borderRadius: {
+        'tr-4': '8px', // Custom class for top-right border radius
       },
       backgroundImage: {
         "radial-gradient": "radial-gradient(var(--tw-gradient-stops))",

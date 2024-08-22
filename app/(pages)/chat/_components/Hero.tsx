@@ -17,6 +17,7 @@ import { useRef } from "react";
 import Generating from "../../../components/Generating";
 import Notification from "../../../components/Notification";
 import ProfessorReview from "./ProfessorReview";
+import ChatInterface from "./Chat";
 const Hero = () => {
   const parallaxRef = useRef(null);
 
@@ -28,9 +29,12 @@ const Hero = () => {
       customPaddings
       id="hero"
     >
-      <div className="chatpage max-w-[1240px] mx-auto px-4 pb-4 flex flex-col gap-4">
-        <h1>Filter</h1>
-        <ProfessorReview/>
+      <div className="chatpage max-w-[1480px] mx-auto px-4 pb-4 flex flex-col gap-4">
+        
+        <div className="flex flex-col-reverse gap-[110px] items-center justify-between xl:flex-row">
+          <ProfessorReview />
+          <ChatInterface/>
+        </div>
       </div>
       <BottomLine />
     </Section>
