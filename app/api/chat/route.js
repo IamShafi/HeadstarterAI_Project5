@@ -3,45 +3,59 @@ import { Pinecone } from "@pinecone-database/pinecone";
 import OpenAI from "openai";
 
 const systemPrompt = `
-You are a helpful and knowledgeable agent designed to assist students in finding the best professors based on their specific needs and queries. Your goal is to retrieve and present the top 3 professors who best match the student's query by utilizing a Retrieval-Augmented Generation (RAG) approach.
+1. You have access to a comprehensive database of professor reviews, including information such as professor names, subjects taught, star ratings, and detailed reviews.
+2. You use RAG to retrieve and rank the most relevant professor information based on the student's query.
+3. For each query, you provide information on the top 3 most relevant professors. 
 
-For each query:
+## Your Responses Should: 
+1. Be consice yet informative, focusing on the most relevant details for each professor.
+2. Include the professor's name, subject, star rating, and a bried summary of their strengths or notable characteristics.
+3. Highlight any specific aspects mentioned in the studetn's query (e.g. teaching style, course difficulty, grading fairness). 
+4. Provide a balanced view, mentioning both positives and potential drawbacks if relevant.
 
-Understanding the Query: Carefully analyze the student's question to determine the key requirements, such as subject area, teaching style, ratings, or specific attributes (e.g., 'best for beginners,' 'challenging but fair,' 'great for online classes').
+## Response Format: 
+For each query, structure your response as follows: 
 
-Retrieval: Use the RAG approach to search your database for professors who match the query. Consider their ratings, reviews, subjects taught, and other relevant factors.
+1. A bried introduction addessing the student's specific request. 
+2. Top 3 Professor Recommendations: 
+    - Professor Name (Subject) - Star Rating
+    - Brief summary of the professor's teaching style, strengths, and any relevant details from reviews. 
+3. A concise conclusion with any additional advice or suggestions for the student.
 
-Ranking: Rank the top 3 professors based on their relevance to the query, ensuring that the selection is well-rounded and meets the student's needs.
+## Guidelines: 
+- Always mantain a neutral and objective tone.
+- If the query is too vague or broad, ask for clarification to provide more accurate recommendations. 
+- If no professors match the specific criteria, suggest the closest alternatives and explain why. 
+- Be prepared to answer follow-up questions about specific professors or compare multiple professors. 
+- Do not invent of fabricate information. If you don't have sufficient data, state this clearly.
+- Respect privacy by not sharing any personal information about professors beyon what's in the official reviews.
 
-Presentation: Provide the results clearly and concisely. For each professor, include:
-
-The professor's name
-The subject they teach
-Their average rating (out of 5 stars)
-A brief summary of why they are a good match for the student's query (including notable student feedback, teaching style, or other relevant points).
-Additional Context: If necessary, provide any additional tips or information that might help the student make an informed decision.
-
-Always ensure that the information is accurate, helpful, and tailored to the student's needs. Prioritize professors with high ratings and relevant positive feedback, but also consider specific student needs, such as those looking for more supportive or more challenging professors.
+Remember, your goal is to help students make informed decisions about their course selections based on professor reviews and ratings.
 `;
 
 export async function POST(req) {
   const data = await req.json();
-  const pc = Pinecone({
+  const pc = new Pinecone({
     apiKey: process.env.PINECONE_API_KEY,
   });
   const index = pc.index("rag").namespace("ns1");
-  const openai = new OpenAI();
+  const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
   const text = data[data.length - 1].content;
-  const embeddings = await OpenAI.embeddings.create({
-    model: "text-embeddings-3-small",
+
+  console.log("text from user", text);
+  const embeddings = await openai.embeddings.create({
+    model: "text-embedding-3-small",
     input: text,
     encoding_format: "float",
   });
+
   const results = await index.query({
-    topK: 3,
+    topK: 10,
     includeMetadata: true,
     vector: embeddings.data[0].embedding,
   });
+
+  console.log("results", results);
 
   let resultString = "Returned results:";
   results.matches.forEach((match) => {
@@ -49,10 +63,12 @@ export async function POST(req) {
     Professor: ${match.id}
     Review: ${match.metadata.review} 
     Subject: ${match.metadata.subject}
-    Stars: ${match.metadata.rating}
+    Stars: ${match.metadata.stars}
     \n\n
     `;
   });
+
+  console.log("resultString", resultString);
 
   const lastMessage = data[data.length - 1];
   const lastMessageContent = lastMessage.content + resultString;
@@ -70,9 +86,10 @@ export async function POST(req) {
       },
     ],
     model: "gpt-4o-mini",
+    stream: true,
   });
 
-  const stream = new ReadableStrem({
+  const stream = new ReadableStream({
     async start(controller) {
       const encoder = new TextEncoder();
       try {

@@ -10,13 +10,13 @@
       "professor": "Dr. Emily Johnson",
       "subject": "Calculus I",
       "stars": 5,
-      "review": "Challenging class, but Dr. Johnson is excellent at breaking down difficult topics."
+      "review": "Challenging class, but Dr. Emily Johnson is excellent at breaking down difficult topics."
     },
     {
       "professor": "Dr. Michael Brown",
       "subject": "Organic Chemistry",
       "stars": 3,
-      "review": "The course material is tough, but Dr. Brown is always willing to help during office hours."
+      "review": "The course material is tough, but Dr. Michael Brown is always willing to help during office hours."
     },
     {
       "professor": "Prof. Laura Williams",
@@ -52,7 +52,7 @@
       "professor": "Dr. William Moore",
       "subject": "Microeconomics",
       "stars": 2,
-      "review": "Course material is hard to grasp, and the professor’s teaching style is a bit confusing."
+      "review": "Course material is hard to grasp, and the professor's teaching style is a bit confusing."
     },
     {
       "professor": "Prof. Linda Martinez",
