@@ -4,7 +4,7 @@ import { Spinner } from "./Spinner";
 
 const ChatInterface: React.FC = () => {
   const { messages, setMessages, chatIsBusy, setChatIsBusy } = useChat();
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState<string>("");
 
   const sendMessage = async () => {
     if (!message) return;
@@ -28,28 +28,28 @@ const ChatInterface: React.FC = () => {
         body: JSON.stringify([...messages, { role: "user", content: message }]),
       });
 
-      const reader = response.body.getReader();
+      const reader = response.body?.getReader();
       const decoder = new TextDecoder();
-      let result = "";
       let fullText = "";
 
-      // Read the streamed data
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) {
-          break;
+      if (reader) {
+        // Read the streamed data
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) {
+            break;
+          }
+          const text = decoder.decode(value || new Uint8Array(), {
+            stream: true,
+          });
+          fullText += text; // Accumulate the streamed data
         }
-        const text = decoder.decode(value || new Uint8Array(), {
-          stream: true,
-        });
-        fullText += text; // Accumulate the streamed data
       }
 
       // Once the stream is complete, update the assistant's message with the full content
       setMessages((messages) => {
-        let lastMessage = messages[messages.length - 1];
-        let otherMessages = messages.slice(0, messages.length - 1);
-
+        const otherMessages = messages.slice(0, -1);
+        const lastMessage = messages[messages.length - 1];
         return [...otherMessages, { ...lastMessage, content: fullText }];
       });
     } catch (error) {
@@ -63,7 +63,7 @@ const ChatInterface: React.FC = () => {
     setMessage("");
   };
 
-  const renderMessageContent = (content, role) => {
+  const renderMessageContent = (content: string, role: "user" | "assistant") => {
     if (role === "user") {
       return <p className="text-lg">{content}</p>;
     }
@@ -84,25 +84,26 @@ const ChatInterface: React.FC = () => {
 
           {professors && professors.length > 0 && (
             <div>
-              <p className="text-lg"> Top Professors Recommendations</p>
+              <p className="text-lg">Top Professors Recommendations</p>
               <div className="space-y-4">
-                {professors.map((professor, index) => (
-                  <div
-                    key={index}
-                    className="bg-white text-black p-4 rounded-lg shadow-md"
-                  >
-                    <p className="text-lg font-bold">
-                      {" "}
-                      {professor.name} ({professor.subject})
-                    </p>
-                    <p className="text-lg text-gray-700 mt-2">
-                      <strong>Stars:</strong> {professor.stars}
-                    </p>
-                    <p className="text-lg text-gray-700 mt-2">
-                      <strong>Summary:</strong> {professor.summary}
-                    </p>
-                  </div>
-                ))}
+                {professors.map(
+                  (professor: { name: string; subject: string; stars: number; summary: string }, index: number) => (
+                    <div
+                      key={index}
+                      className="bg-white text-black p-4 rounded-lg shadow-md"
+                    >
+                      <p className="text-lg font-bold">
+                        {professor.name} ({professor.subject})
+                      </p>
+                      <p className="text-lg text-gray-700 mt-2">
+                        <strong>Stars:</strong> {professor.stars}
+                      </p>
+                      <p className="text-lg text-gray-700 mt-2">
+                        <strong>Summary:</strong> {professor.summary}
+                      </p>
+                    </div>
+                  )
+                )}
               </div>
             </div>
           )}
@@ -115,7 +116,7 @@ const ChatInterface: React.FC = () => {
         </div>
       );
     } catch (error) {
-      console.log("Error parsing JSON content:", error);
+      console.error("Error parsing JSON content:", error);
       return <p>{content}</p>;
     }
   };

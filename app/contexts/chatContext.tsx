@@ -1,18 +1,36 @@
-import React, { createContext, useState, useContext } from "react";
+import React, { createContext, useState, useContext, ReactNode } from "react";
 
-const ChatContext = createContext();
+type Message = {
+  role: "assistant" | "user";
+  content: string;
+};
 
-export const useChat = () => useContext(ChatContext);
+type ChatContextType = {
+  messages: Message[];
+  setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
+  chatIsBusy: boolean;
+  setChatIsBusy: React.Dispatch<React.SetStateAction<boolean>>;
+};
 
-export const ChatProvider = ({ children }) => {
-  const [messages, setMessages] = useState([
+const ChatContext = createContext<ChatContextType | undefined>(undefined);
+
+export const useChat = () => {
+  const context = useContext(ChatContext);
+  if (!context) {
+    throw new Error("useChat must be used within a ChatProvider");
+  }
+  return context;
+};
+
+export const ChatProvider = ({ children }: { children: ReactNode }) => {
+  const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
       content:
         "Hi! I'm the Rate My Professor support assistant. How can I help you today?",
     },
   ]);
-  const [chatIsBusy, setChatIsBusy] = useState(false);
+  const [chatIsBusy, setChatIsBusy] = useState<boolean>(false);
 
   return (
     <ChatContext.Provider

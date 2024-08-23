@@ -73,7 +73,7 @@ const ProfessorReview: React.FC = () => {
     console.log("Searching for professors");
     setChatIsBusy(false);
   };
-  const onSubmit = (values: typeof initialValues, { setSubmitting }) => {
+  const onSubmit = (values: typeof initialValues, { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }) => {
     if (chatIsBusy) return;
 
     setRatingError(null);
