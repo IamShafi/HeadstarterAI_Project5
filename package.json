@@ -20,6 +20,7 @@
     "react-dom": "^18",
     "react-just-parallax": "^3.1.16",
     "scroll-lock": "^2.1.5",
+    "sharp": "^0.33.5",
     "yup": "^1.4.0"
   },
   "devDependencies": {

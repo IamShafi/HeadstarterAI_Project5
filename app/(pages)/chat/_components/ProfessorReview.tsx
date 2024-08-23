@@ -118,7 +118,7 @@ const ProfessorReview: React.FC = () => {
 
   return (
     <section className="chat-filter flex flex-col gap-4">
-      <div className="flex flex-col gap-4 p-4 bg-gray-700 bg-opacity-30 rounded-lg max-w-[596px] max-md:px-5">
+      <div className="flex flex-col gap-1 p-4 bg-gray-700 bg-opacity-30 rounded-lg max-w-[596px] max-md:px-5">
         <h2 className="gap-2.5 self-start text-2xl tracking-normal leading-loose text-white">
           Filter
         </h2>
@@ -165,7 +165,7 @@ const ProfessorReview: React.FC = () => {
           <div className="text-red-500">{rateMyProfessorError}</div>
         )}
       </div>
-      <div className="flex flex-col gap-2 p-4 bg-gray-700 bg-opacity-30 rounded-lg max-w-[596px] max-md:px-5">
+      <div className="flex flex-col gap-1 p-4 bg-gray-700 bg-opacity-30 rounded-lg max-w-[596px] max-md:px-5">
         <h2 className="gap-2.5 self-start text-2xl tracking-normal leading-loose text-white">
           Search for Professors
         </h2>
@@ -194,7 +194,7 @@ const ProfessorReview: React.FC = () => {
           </button>
         </div>
       </div>
-      <div className="flex overflow-hidden flex-col px-9 pt-14 pb-5 rounded-lg bg-gray-700 bg-opacity-30 max-w-[596px] max-md:px-5">
+      <div className="flex overflow-hidden flex-col px-4 pt-[2rem] pb-5 rounded-lg bg-gray-700 bg-opacity-30 max-w-[596px] max-md:px-5">
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
@@ -202,7 +202,7 @@ const ProfessorReview: React.FC = () => {
         >
           {({ setFieldValue, isSubmitting }) => (
             <Form>
-              <div className="flex flex-wrap gap-10 items-center px-4 w-full rounded-2xl border border-black border-solid max-md:max-w-full">
+              <div className="flex flex-wrap pb-4 items-center px-4 w-full rounded-2xl border border-black border-solid max-md:max-w-full">
                 <label
                   htmlFor="professor-name"
                   className="gap-2.5 self-stretch p-2.5 my-auto text-2xl tracking-normal leading-loose text-white"
@@ -291,7 +291,7 @@ const ProfessorReview: React.FC = () => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className={`overflow-hidden self-center px-16 py-3.5 mt-8 max-w-full text-2xl font-semibold leading-tight text-white whitespace-nowrap rounded-2xl w-[372px] max-md:px-5 flex justify-center items-center gap-2 ${
+                className={`overflow-hidden self-center px-16 py-3.5 mt-8 max-w-full text-2xl font-semibold leading-tight text-white whitespace-nowrap rounded-2xl w-full max-md:px-5 flex justify-center items-center gap-2 ${
                   isSubmitting ? "bg-red-800" : "bg-red-400"
                 }`}
               >

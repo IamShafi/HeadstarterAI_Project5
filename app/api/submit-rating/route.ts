@@ -4,14 +4,14 @@ import OpenAI from "openai";
 
 export async function POST(req: NextRequest) {
   // Extract JSON data from the request body
-  const ratingData = await req.json();
+  const reviewData = await req.json();
 
   if (
-    ratingData.stars < 0 ||
-    ratingData.stars > 5 ||
-    !ratingData.professorName ||
-    !ratingData.subject ||
-    !ratingData.review
+    reviewData.stars < 0 ||
+    reviewData.stars > 5 ||
+    !reviewData.professor ||
+    !reviewData.subject ||
+    !reviewData.review
   ) {
     return NextResponse.json(
       {
@@ -29,30 +29,29 @@ export async function POST(req: NextRequest) {
       apiKey: process.env.PINECONE_API_KEY!,
     });
     const openai = new OpenAI();
-    // Define the Pinecone index and namespace to use for storing the data
-    const index = pc.index("rag").namespace("ns1");
-    const prompt = `Professor ${ratingData.professorName} teaches ${ratingData.subject}. Rating: ${ratingData.stars}/5. Reviews: ${ratingData.review}`;
 
+    // Create the prompt based on the review data
+    const prompt = `Review of Professor ${reviewData.professor}, who teaches ${reviewData.subject}. Rating: ${reviewData.stars}/5. Review: "${reviewData.review}"`;
+
+    // Generate embedding from OpenAI
     const embedding = await openai.embeddings.create({
-      model: "text-embedding-3-small",
+      model: "text-embedding-ada-002",
       input: prompt,
-      encoding_format: "float",
     });
 
-    // Insert into Pinecone
+    // Define the Pinecone index and namespace
+    const index = pc.index("rag").namespace("ns1");
+
+    // Upsert into Pinecone
     const upsertResponse = await index.upsert([
       {
-        id: `${ratingData.professorName
-          .replace(/\s+/g, "_")
-          .toLowerCase()}_${Date.now()}`,
+        id: `${reviewData.professor.replace(/\s+/g, "_").toLowerCase()}_${Date.now()}`,
         values: embedding.data[0].embedding,
         metadata: {
-          {
-            professorName: ratingData.professorName,
-            subject: ratingData.subject,
-            stars: ratingData.stars,
-            reviews: ratingData.review,
-          },
+          professor: reviewData.professor,
+          subject: reviewData.subject,
+          stars: reviewData.stars,
+          review: reviewData.review,
           type: "professor_rating",
         },
       },
@@ -60,8 +59,7 @@ export async function POST(req: NextRequest) {
 
     console.log("Upsert response:", upsertResponse);
     return NextResponse.json({
-      message: `Professor rated successfully`,
-      professorName: ratingData.professorName,
+      message: `Professor ${reviewData.professor} rated successfully`,
     });
   } catch (error) {
     if (error instanceof Error) {

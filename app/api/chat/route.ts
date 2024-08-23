@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { Pinecone } from "@pinecone-database/pinecone";
 import OpenAI from "openai";
-import { Calligraffitti } from "next/font/google";
+import { NextRequest } from "next/server";
 
 const systemPrompt = `
 1. You have access to a comprehensive database of professor reviews, including information such as professor names, subjects taught, star ratings, and detailed reviews.
@@ -52,7 +52,7 @@ For professor-related queries, use the following JSON structure:
 
 Remember, your primary goal is to help students make informed decisions about their course selections based on professor reviews and ratings, but you should also be able to handle casual conversation politely. Always stick to the information provided by the RAG system.
 `;
-export async function POST(req) {
+export async function POST(req: NextRequest) {
   const data = await req.json();
   const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
@@ -60,7 +60,7 @@ export async function POST(req) {
 
   let responseContent;
   const pinecone = new Pinecone({
-    apiKey: process.env.PINECONE_API_KEY,
+    apiKey: process.env.PINECONE_API_KEY!,
   });
   const index = pinecone.index("rag").namespace("ns1");
 
@@ -77,10 +77,10 @@ export async function POST(req) {
   });
 
   let professors = results.matches.map((match) => ({
-    name: match.metadata.professorName,
-    subject: match.metadata.subject,
-    stars: match.metadata.stars,
-    review: match.metadata.reviews,
+    name: match.metadata?.professorName ?? 'Unknown',
+    subject: match.metadata?.subject ?? 'Unknown',
+    stars: match.metadata?.stars ?? 'Not rated',
+    review: match.metadata?.reviews ?? 'No reviews available',
   }));
 
   console.log("Professors:", professors, "\n");

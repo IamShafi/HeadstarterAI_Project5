@@ -63,6 +63,13 @@ const ChatInterface: React.FC = () => {
     setMessage("");
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      e.preventDefault(); // Prevent the default behavior of pressing "Enter"
+      sendMessage();
+    }
+  };
+
   const renderMessageContent = (content: string, role: "user" | "assistant") => {
     if (role === "user") {
       return <p className="text-lg">{content}</p>;
@@ -122,8 +129,8 @@ const ChatInterface: React.FC = () => {
   };
 
   return (
-    <div className="chat-container flex flex-col gap-6 mt-12">
-      <div className="flex flex-col items-center rounded-3xl bg-gray-700 bg-opacity-30 max-w-[724px] h-[542px] overflow-y-scroll">
+    <div className="chat-container flex flex-col gap-6">
+      <div className="flex flex-col items-center rounded-3xl bg-gray-700 bg-opacity-30 max-w-[724px] h-[400px] overflow-y-scroll">
         <div className="flex flex-col w-full text-2xl leading-tight text-white rounded-none max-md:max-w-full p-4">
           {messages.map((message, index) => (
             <div
@@ -175,6 +182,7 @@ const ChatInterface: React.FC = () => {
             ${chatIsBusy ? "cursor-not-allowed " : ""}`}
             value={message}
             onChange={(e) => setMessage(e.target.value)}
+            onKeyDown={handleKeyDown}
             disabled={chatIsBusy}
           />
           <button
