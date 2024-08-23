@@ -11,12 +11,16 @@
   "dependencies": {
     "@pinecone-database/pinecone": "^3.0.1",
     "@types/scroll-lock": "^2.1.3",
+    "cheerio": "^1.0.0",
+    "formik": "^2.4.6",
     "next": "14.2.4",
+    "node-fetch": "^3.3.2",
     "openai": "^4.56.0",
     "react": "^18",
     "react-dom": "^18",
     "react-just-parallax": "^3.1.16",
-    "scroll-lock": "^2.1.5"
+    "scroll-lock": "^2.1.5",
+    "yup": "^1.4.0"
   },
   "devDependencies": {
     "@types/node": "^20",
