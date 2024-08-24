@@ -4,13 +4,13 @@ import React, { useState } from "react";
 import { disablePageScroll, enablePageScroll } from "scroll-lock";
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname } from 'next/navigation';
-import brainwave  from "../../assets/brainwave.svg";
+import { usePathname } from "next/navigation";
+import brainwave from "../../assets/brainwave.svg";
 import MenuSvg from "../../assets/svg/MenuSvg";
 import Button from "./Button";
-import {HamburgerMenu} from "./design/Header"
+import { HamburgerMenu } from "./design/Header";
 import { navigation } from "../../constants/index";
-
+import { SignedIn, SignedOut, UserButton, useAuth } from "@clerk/nextjs";
 
 const Header = () => {
   const pathname = usePathname();
@@ -59,9 +59,7 @@ const Header = () => {
                 className={`block relative font-code text-2xl uppercase text-n-1 transition-colors hover:text-color-1 ${
                   item.onlyMobile ? "lg:hidden" : ""
                 } px-6 py-6 md:py-8 lg:-mr-0.25 lg:text-xs lg:font-semibold ${
-                  item.url === pathname
-                    ? "z-2 lg:text-n-1"
-                    : "lg:text-n-1/50"
+                  item.url === pathname ? "z-2 lg:text-n-1" : "lg:text-n-1/50"
                 } lg:leading-5 lg:hover:text-n-1 xl:px-12`}
               >
                 {item.title}
@@ -71,17 +69,29 @@ const Header = () => {
 
           <HamburgerMenu />
         </nav>
-
-        <Link
-          href="/sign-up"
-          className="button hidden mr-8 text-n-1/50 transition-colors hover:text-n-1 lg:block"
-        >
-          New account
-        </Link>
-        <Button className="hidden lg:flex" href="/sign-in">
-          Sign in
-        </Button>
-
+        <SignedIn>
+          <UserButton
+            appearance={{
+              elements: {
+                avatarBox: "h-10 w-10",
+              },
+              variables: {
+                colorPrimary: "#5D63AF",
+              },
+            }}
+          />
+        </SignedIn>
+        <SignedOut>
+          <Link
+            href="/sign-up"
+            className="button hidden mr-8 text-n-1/50 transition-colors hover:text-n-1 lg:block"
+          >
+            New account
+          </Link>
+          <Button className="hidden lg:flex" href="/sign-in">
+            Sign in
+          </Button>
+        </SignedOut>
         <Button
           className="ml-auto lg:hidden"
           px="px-3"
@@ -95,4 +105,3 @@ const Header = () => {
 };
 
 export default Header;
-
