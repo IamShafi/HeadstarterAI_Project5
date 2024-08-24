@@ -70,15 +70,18 @@ const ChatInterface: React.FC = () => {
     }
   };
 
-  const renderMessageContent = (content: string, role: "user" | "assistant") => {
+  const renderMessageContent = (
+    content: string,
+    role: "user" | "assistant"
+  ) => {
     if (role === "user") {
-      return <p className="text-lg">{content}</p>;
+      return <p className="text-[16px]">{content}</p>;
     }
 
     try {
       const data = JSON.parse(content);
       if (data?.message) {
-        return <p className="text-lg">{data.message}</p>;
+        return <p className="text-[16px]">{data.message}</p>;
       }
       const { introduction, professors, conclusion } = data;
       return (
@@ -91,21 +94,29 @@ const ChatInterface: React.FC = () => {
 
           {professors && professors.length > 0 && (
             <div>
-              <p className="text-lg">Top Professors Recommendations</p>
+              <p className="text-[16px]">Top Professors Recommendations</p>
               <div className="space-y-4">
                 {professors.map(
-                  (professor: { name: string; subject: string; stars: number; summary: string }, index: number) => (
+                  (
+                    professor: {
+                      name: string;
+                      subject: string;
+                      stars: number;
+                      summary: string;
+                    },
+                    index: number
+                  ) => (
                     <div
                       key={index}
                       className="bg-white text-black p-4 rounded-lg shadow-md"
                     >
-                      <p className="text-lg font-bold">
+                      <p className="text-[16px] font-bold">
                         {professor.name} ({professor.subject})
                       </p>
-                      <p className="text-lg text-gray-700 mt-2">
+                      <p className="text-[16px] text-gray-700 mt-2">
                         <strong>Stars:</strong> {professor.stars}
                       </p>
-                      <p className="text-lg text-gray-700 mt-2">
+                      <p className="text-[16px] text-gray-700 mt-2">
                         <strong>Summary:</strong> {professor.summary}
                       </p>
                     </div>
@@ -117,14 +128,14 @@ const ChatInterface: React.FC = () => {
 
           {conclusion && (
             <div>
-              <p className="text-lg">{conclusion}</p>
+              <p className="text-[16px]">{conclusion}</p>
             </div>
           )}
         </div>
       );
     } catch (error) {
       console.error("Error parsing JSON content:", error);
-      return <p>{content}</p>;
+      return <p className="text-[16px]">{content}</p>;
     }
   };
 
@@ -178,7 +189,7 @@ const ChatInterface: React.FC = () => {
           <input
             type="text"
             placeholder="Chat with AI assistant"
-            className={`flex-grow px-4 py-2 text-black text-[21px] bg-transparent outline-none placeholder-white
+            className={`flex-grow px-4 py-2 text-black text-[18px] bg-transparent outline-none placeholder-white
             ${chatIsBusy ? "cursor-not-allowed " : ""}`}
             value={message}
             onChange={(e) => setMessage(e.target.value)}
