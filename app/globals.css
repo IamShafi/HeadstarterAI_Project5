@@ -23,6 +23,16 @@
   }
 }
 
+
+.primary-gradient {
+  background: linear-gradient(93deg, #373b6a -13.95%, #5d63af 99.54%);
+}
+.primary-text-gradient {
+  background: linear-gradient(129deg, #5d63af 0%, #9bace3 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 .rotate-45 {
   @apply rotate-[45deg]
 }

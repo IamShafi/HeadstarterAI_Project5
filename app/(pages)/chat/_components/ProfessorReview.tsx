@@ -129,7 +129,7 @@ const ProfessorReview: React.FC = () => {
         >
           <input
             type="text"
-            placeholder="Submit Your Rate My Professor URL"
+            placeholder="Enter Professor URL"
             className="flex-grow px-4 py-2 text-black text-[21px] bg-transparent outline-none placeholder-white"
             onChange={(e) => setUrl(e.target.value)}
             disabled={rateMyProfessorLoading}
@@ -172,7 +172,7 @@ const ProfessorReview: React.FC = () => {
         <div className="flex items-center bg-[#ADA8C4] rounded-[16px] overflow-hidden w-full h-[56px] max-w-[558px] px-[16px] py-[8px]">
           <input
             type="text"
-            placeholder="Rating, Professor Name, Subject, etc."
+            placeholder="Enter Professor Name or Subject"
             className="flex-grow px-4 py-2 text-black text-[21px] bg-transparent outline-none placeholder-white"
           />
           <button className="p-2 bg-gray-700 rounded-full">
