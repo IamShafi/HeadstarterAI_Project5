@@ -70,7 +70,10 @@ const ChatInterface: React.FC = () => {
     }
   };
 
-  const renderMessageContent = (content: string, role: "user" | "assistant") => {
+  const renderMessageContent = (
+    content: string,
+    role: "user" | "assistant"
+  ) => {
     if (role === "user") {
       return <p className="text-lg">{content}</p>;
     }
@@ -94,7 +97,15 @@ const ChatInterface: React.FC = () => {
               <p className="text-lg">Top Professors Recommendations</p>
               <div className="space-y-4">
                 {professors.map(
-                  (professor: { name: string; subject: string; stars: number; summary: string }, index: number) => (
+                  (
+                    professor: {
+                      name: string;
+                      subject: string;
+                      stars: number;
+                      summary: string;
+                    },
+                    index: number
+                  ) => (
                     <div
                       key={index}
                       className="bg-white text-black p-4 rounded-lg shadow-md"
@@ -123,7 +134,6 @@ const ChatInterface: React.FC = () => {
         </div>
       );
     } catch (error) {
-      console.error("Error parsing JSON content:", error);
       return <p>{content}</p>;
     }
   };

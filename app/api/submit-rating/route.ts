@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
   if (
     reviewData.stars < 0 ||
     reviewData.stars > 5 ||
-    !reviewData.professor ||
+    !reviewData.professorName ||
     !reviewData.subject ||
     !reviewData.review
   ) {
@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
     const openai = new OpenAI();
 
     // Create the prompt based on the review data
-    const prompt = `Review of Professor ${reviewData.professor}, who teaches ${reviewData.subject}. Rating: ${reviewData.stars}/5. Review: "${reviewData.review}"`;
+    const prompt = `Review of Professor ${reviewData.professorName}, who teaches ${reviewData.subject}. Rating: ${reviewData.stars}/5. Review: "${reviewData.review}"`;
 
     // Generate embedding from OpenAI
     const embedding = await openai.embeddings.create({
@@ -45,10 +45,12 @@ export async function POST(req: NextRequest) {
     // Upsert into Pinecone
     const upsertResponse = await index.upsert([
       {
-        id: `${reviewData.professor.replace(/\s+/g, "_").toLowerCase()}_${Date.now()}`,
+        id: `${reviewData.professor
+          .replace(/\s+/g, "_")
+          .toLowerCase()}_${Date.now()}`,
         values: embedding.data[0].embedding,
         metadata: {
-          professor: reviewData.professor,
+          professor: reviewData.professorName,
           subject: reviewData.subject,
           stars: reviewData.stars,
           review: reviewData.review,
@@ -59,7 +61,7 @@ export async function POST(req: NextRequest) {
 
     console.log("Upsert response:", upsertResponse);
     return NextResponse.json({
-      message: `Professor ${reviewData.professor} rated successfully`,
+      message: `Professor ${reviewData.professorName} rated successfully`,
     });
   } catch (error) {
     if (error instanceof Error) {
