@@ -45,7 +45,7 @@ export async function POST(req: NextRequest) {
     // Upsert into Pinecone
     const upsertResponse = await index.upsert([
       {
-        id: `${reviewData.professor
+        id: `${reviewData.professorName
           .replace(/\s+/g, "_")
           .toLowerCase()}_${Date.now()}`,
         values: embedding.data[0].embedding,

@@ -61,7 +61,7 @@ const ProfessorReview: React.FC = () => {
   const initialValues = {
     professorName: "",
     subject: "",
-    rating: 0,
+    rating: null,
     professorReview: "",
     url: "",
   };
@@ -73,7 +73,10 @@ const ProfessorReview: React.FC = () => {
     console.log("Searching for professors");
     setChatIsBusy(false);
   };
-  const onSubmit = (values: typeof initialValues, { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }) => {
+  const onSubmit = (
+    values: typeof initialValues,
+    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
+  ) => {
     if (chatIsBusy) return;
 
     setRatingError(null);
@@ -119,7 +122,7 @@ const ProfessorReview: React.FC = () => {
   return (
     <section className="chat-filter flex flex-col gap-4">
       <div className="flex flex-col gap-1 p-4 bg-gray-700 bg-opacity-30 rounded-lg max-w-[596px] max-md:px-5">
-        <h2 className="gap-2.5 self-start text-2xl tracking-normal leading-loose text-white">
+        <h2 className="gap-2.5 self-start text-xl tracking-normal leading-loose text-white">
           Filter
         </h2>
         <div
@@ -129,8 +132,8 @@ const ProfessorReview: React.FC = () => {
         >
           <input
             type="text"
-            placeholder="Enter Professor URL"
-            className="flex-grow px-4 py-2 text-black text-[21px] bg-transparent outline-none placeholder-white"
+            placeholder="Submit Your Rate My Professor URL"
+            className="flex-grow px-4 py-2 text-black text-[16px] bg-transparent outline-none placeholder-white"
             onChange={(e) => setUrl(e.target.value)}
             disabled={rateMyProfessorLoading}
           />
@@ -166,35 +169,63 @@ const ProfessorReview: React.FC = () => {
         )}
       </div>
       <div className="flex flex-col gap-1 p-4 bg-gray-700 bg-opacity-30 rounded-lg max-w-[596px] max-md:px-5">
-        <h2 className="gap-2.5 self-start text-2xl tracking-normal leading-loose text-white">
+        <h2 className="gap-2.5 self-start text-xl tracking-normal leading-loose text-white">
           Search for Professors
         </h2>
-        <div className="flex items-center bg-[#ADA8C4] rounded-[16px] overflow-hidden w-full h-[56px] max-w-[558px] px-[16px] py-[8px]">
-          <input
-            type="text"
-            placeholder="Enter Professor Name or Subject"
-            className="flex-grow px-4 py-2 text-black text-[21px] bg-transparent outline-none placeholder-white"
-          />
-          <button className="p-2 bg-gray-700 rounded-full">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={2}
-              stroke="currentColor"
-              className="w-4 h-4 text-white"
-              onClick={() => searchForProfessors()}
+        <div>
+          <div className="items-center w-full rounded-2xl border border-black border-solid max-md:max-w-full">
+            <input
+              type="text"
+              placeholder="Enter Professor Name"
+              className="overflow-hidden text-[15px] grow shrink self-stretch px-4 py-2.5 my-auto text-base leading-tight w-full text-black bg-[#ADA8C4] rounded-lg w-[200px] max-md:px-5 placeholder-white"
+            />
+          </div>
+          {/* <div className="flex flex-wrap gap-10 items-centerw-full mt-4 rounded-2xl border border-black border-solid max-md:max-w-full">
+            <Field
+              type="text"
+              placeholder="Enter Subject"
+              className="overflow-hidden text-[16px] grow shrink self-stretch px-4 py-2.5 my-auto text-base leading-tight text-black bg-[#ADA8C4] rounded-lg w-[200px] max-md:px-5 placeholder-white"
+            />
+          </div>
+          <div className="flex flex-wrap gap-10 items-center w-full mt-4 rounded-2xl border border-black border-solid max-md:max-w-full">
+            <label
+              htmlFor="rating"
+              className="gap-2.5 self-stretch p-2.5 my-auto text-xl tracking-normal leading-loose text-white"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M5 12h14m-7-7l7 7-7 7"
-              />
-            </svg>
+              Rating (0-5)
+            </label>
+            <Field
+              as="select"
+              className="overflow-hidden text-[16px] grow shrink self-stretch px-4 py-2.5 my-auto mr-3 text-base leading-tight text-black bg-[#ADA8C4] rounded-lg w-[100px] max-md:px-5 placeholder-white"
+            >
+              <option value="">Select</option>
+              <option value={0}>0</option>
+              <option value={1}>1</option>
+              <option value={2}>2</option>
+              <option value={3}>3</option>
+              <option value={4}>4</option>
+              <option value={5}>5</option>
+            </Field>
+          </div>
+          <div className="mt-8">
+            <Field
+              as="textarea"
+              placeholder="Write your review for this professor"
+              className="overflow-y-auto text-[24px] px-6 pt-5 pb-10 text-base leading-tight text-black bg-gray-400 rounded-2xl max-md:px-5 max-md:max-w-full w-full placeholder-white"
+            />
+          </div> */}
+          <button
+            type="submit"
+            className={`overflow-hidden self-center px-16 py-3.5 mt-8 max-w-full text-2l font-semibold leading-tight text-white whitespace-nowrap rounded-2xl w-full max-md:px-5 flex justify-center items-center gap-2`}
+          >
+            Search
           </button>
         </div>
       </div>
       <div className="flex overflow-hidden flex-col px-4 pt-[2rem] pb-5 rounded-lg bg-gray-700 bg-opacity-30 max-w-[596px] max-md:px-5">
+        <h2 className="gap-2.5 self-start text-xl tracking-normal leading-loose text-white">
+          Add Professor Rating
+        </h2>
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
@@ -202,52 +233,40 @@ const ProfessorReview: React.FC = () => {
         >
           {({ setFieldValue, isSubmitting }) => (
             <Form>
-              <div className="flex flex-wrap pb-4 items-center px-4 w-full rounded-2xl border border-black border-solid max-md:max-w-full">
-                <label
-                  htmlFor="professor-name"
-                  className="gap-2.5 self-stretch p-2.5 my-auto text-2xl tracking-normal leading-loose text-white"
-                >
-                  Professor Name
-                </label>
+              <div className="items-center w-full rounded-2xl border border-black border-solid max-md:max-w-full">
                 <Field
                   type="text"
                   id="professor-name"
                   name="professorName"
                   placeholder="Enter Professor Name"
-                  className="overflow-hidden text-[18px] grow shrink self-stretch px-4 py-2.5 my-auto text-base leading-tight text-black bg-[#ADA8C4] rounded-lg w-[200px] max-md:px-5 placeholder-white"
-                />
-                <ErrorMessage
-                  name="professorName"
-                  component="div"
-                  className="text-red-500"
+                  className="overflow-hidden text-[15px] grow shrink self-stretch px-4 py-2.5 my-auto text-base leading-tight w-full text-black bg-[#ADA8C4] rounded-lg w-[200px] max-md:px-5 placeholder-white"
                 />
               </div>
+              <ErrorMessage
+                name="professorName"
+                component="div"
+                className="text-red-500"
+              />
 
-              <div className="flex flex-wrap gap-10 items-center px-4 w-full mt-4 rounded-2xl border border-black border-solid max-md:max-w-full">
-                <label
-                  htmlFor="subject"
-                  className="gap-2.5 self-stretch p-2.5 my-auto text-2xl tracking-normal leading-loose text-white"
-                >
-                  Subject
-                </label>
+              <div className="flex flex-wrap gap-10 items-centerw-full mt-4 rounded-2xl border border-black border-solid max-md:max-w-full">
                 <Field
                   type="text"
                   id="subject"
                   name="subject"
                   placeholder="Enter Subject"
-                  className="overflow-hidden text-[18px] grow shrink self-stretch px-4 py-2.5 my-auto text-base leading-tight text-black bg-[#ADA8C4] rounded-lg w-[200px] max-md:px-5 placeholder-white"
-                />
-                <ErrorMessage
-                  name="subject"
-                  component="div"
-                  className="text-red-500"
+                  className="overflow-hidden text-[16px] grow shrink self-stretch px-4 py-2.5 my-auto text-base leading-tight text-black bg-[#ADA8C4] rounded-lg w-[200px] max-md:px-5 placeholder-white"
                 />
               </div>
+              <ErrorMessage
+                name="subject"
+                component="div"
+                className="text-red-500"
+              />
 
-              <div className="flex flex-wrap gap-10 items-center px-4 w-full mt-4 rounded-2xl border border-black border-solid max-md:max-w-full">
+              <div className="flex flex-wrap gap-10 items-center w-full mt-4 rounded-2xl border border-black border-solid max-md:max-w-full">
                 <label
                   htmlFor="rating"
-                  className="gap-2.5 self-stretch p-2.5 my-auto text-2xl tracking-normal leading-loose text-white"
+                  className="gap-2.5 self-stretch p-2.5 my-auto text-xl tracking-normal leading-loose text-white"
                 >
                   Rating (0-5)
                 </label>
@@ -255,8 +274,9 @@ const ProfessorReview: React.FC = () => {
                   as="select"
                   id="rating"
                   name="rating"
-                  className="overflow-hidden text-[18px] grow shrink self-stretch px-4 py-2.5 my-auto text-base leading-tight text-black bg-[#ADA8C4] rounded-lg w-[100px] max-md:px-5 placeholder-white"
+                  className="overflow-hidden text-[16px] grow shrink self-stretch px-4 py-2.5 my-auto mr-3 text-base leading-tight text-black bg-[#ADA8C4] rounded-lg w-[100px] max-md:px-5 placeholder-white"
                 >
+                  <option value="">Select</option>
                   <option value={0}>0</option>
                   <option value={1}>1</option>
                   <option value={2}>2</option>
@@ -264,12 +284,12 @@ const ProfessorReview: React.FC = () => {
                   <option value={4}>4</option>
                   <option value={5}>5</option>
                 </Field>
-                <ErrorMessage
-                  name="rating"
-                  component="div"
-                  className="text-red-500"
-                />
               </div>
+              <ErrorMessage
+                name="rating"
+                component="div"
+                className="text-red-500"
+              />
 
               <div className="mt-8">
                 <Field
@@ -277,21 +297,21 @@ const ProfessorReview: React.FC = () => {
                   id="professor-review"
                   name="professorReview"
                   placeholder="Write your review for this professor"
-                  className="overflow-hidden text-[24px] px-6 pt-5 pb-20 text-base leading-tight text-black bg-gray-400 rounded-2xl max-md:px-5 max-md:max-w-full w-full placeholder-white"
+                  className="overflow-y-auto text-[24px] px-6 pt-5 pb-10 text-base leading-tight text-black bg-gray-400 rounded-2xl max-md:px-5 max-md:max-w-full w-full placeholder-white"
                 />
-                <ErrorMessage
-                  name="professorReview"
-                  component="div"
-                  className="text-red-500"
-                />
-                {ratingError && (
-                  <div className="text-red-500">There has been an error</div>
-                )}
               </div>
+              <ErrorMessage
+                name="professorReview"
+                component="div"
+                className="text-red-500"
+              />
+              {ratingError && (
+                <div className="text-red-500">There has been an error</div>
+              )}
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className={`overflow-hidden self-center px-16 py-3.5 mt-8 max-w-full text-2xl font-semibold leading-tight text-white whitespace-nowrap rounded-2xl w-full max-md:px-5 flex justify-center items-center gap-2 ${
+                className={`overflow-hidden self-center px-16 py-3.5 mt-8 max-w-full text-2l font-semibold leading-tight text-white whitespace-nowrap rounded-2xl w-full max-md:px-5 flex justify-center items-center gap-2 ${
                   isSubmitting ? "bg-red-800" : "bg-red-400"
                 }`}
               >
