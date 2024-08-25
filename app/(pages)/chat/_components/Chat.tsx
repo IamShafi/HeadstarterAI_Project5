@@ -88,7 +88,7 @@ const ChatInterface: React.FC = () => {
         <div className="space-y-4">
           {introduction && (
             <div>
-              <p className="text-lg">{introduction}</p>
+              <p className="text-[16px]">{introduction}</p>
             </div>
           )}
 

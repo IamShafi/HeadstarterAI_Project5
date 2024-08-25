@@ -5,30 +5,20 @@ import { NextRequest } from "next/server";
 
 const systemPrompt = `
 1. You have access to a comprehensive database of professor reviews, including information such as professor names, subjects taught, star ratings, and detailed reviews.
-2. You use RAG to retrieve and rank the most relevant professor information based on the student's query. 
-3. For each query, you provide information on the most relevant professors if available (don't invent any name, ONLY use what RAG provides you). 
-4. Professors can be any subject, from socials, maths, sciences or recreational courses as art, music, dancing etc.
+2. You use RAG to retrieve and rank the most relevant professor information based on the student's query.
+3. For student queries that are composed of specific parameters such as professor name, subject, and star rating, you provide concise yet informative responses focusing on the most relevant details for each professor if available, if not, you inform the student accordingly.
 
-## Student Query:
+## Student Query is searching for specific parameters, such as professor name, subject, and star rating.
 ## Your Responses Should: 
 1. Be concise yet informative, focusing on the most relevant details for each professor.
 2. Include the professor's name, subject, star rating, and a brief summary of their strengths or notable characteristics.
 3. Highlight any specific aspects mentioned in the student's query (e.g., teaching style, course difficulty, grading fairness). 
 4. Provide a balanced view, mentioning both positives and potential drawbacks if relevant.
-5. Only return professors that match the student's query. If no professors match, return an empty array and inform the student that no matching professors were found.
-
+5. Only return professors that match the student's query parameters. If no professors match, return an empty array and inform the student that no matching professors were found.
 
 ## Response Format: 
 
-For non-professor queries, greetings, or small talk, use this structure:
-
-{
-  "introduction": "A friendly response to the user's greeting or comment.",
-  "isProfessorQuery": false,
-  "conclusion": "A polite reminder that you're here to help with professor reviews, and an invitation to ask about specific professors or courses."
-}
-
-For professor-related queries, use the following JSON structure:
+Use the following JSON structure:
 {
   "introduction": "A brief introduction addressing the student's specific request.",
   "isProfessorQuery": true,
@@ -38,8 +28,7 @@ For professor-related queries, use the following JSON structure:
       "subject": "Subject",
       "stars": "Star Rating",
       "summary": "Brief summary of the professor's teaching style, strengths, and any relevant details from reviews."
-    },
-    ...
+    }
   ],
   "conclusion": "A concise conclusion with any additional advice or suggestions for the student."
 }
@@ -55,15 +44,15 @@ For professor-related queries, use the following JSON structure:
 
 Remember, your primary goal is to help students make informed decisions about their course selections based on professor reviews and ratings, but you should also be able to handle casual conversation politely. Always stick to the information provided by the RAG system.
 `;
+
 export async function POST(req: NextRequest) {
   const data = await req.json();
+
   const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+  const userMessage = data.message;
 
-  const userMessage = data[data.length - 1].content;
+  console.log("Submitting query search User message:", userMessage);
 
-  console.log("User Message:", userMessage, "\n");
-
-  let responseContent;
   const pinecone = new Pinecone({
     apiKey: process.env.PINECONE_API_KEY!,
   });
@@ -72,7 +61,6 @@ export async function POST(req: NextRequest) {
   const embeddings = await openai.embeddings.create({
     model: "text-embedding-3-small",
     input: userMessage,
-    encoding_format: "float",
   });
 
   const results = await index.query({
@@ -81,33 +69,22 @@ export async function POST(req: NextRequest) {
     vector: embeddings.data[0].embedding,
   });
 
-  let professors = results.matches.map((match) => ({
-    name: match.metadata?.professorName ?? "Unknown",
-    subject: match.metadata?.subject ?? "Unknown",
-    stars: match.metadata?.stars ?? "Not rated",
-    review: match.metadata?.reviews ?? "No reviews available",
-  }));
+  console.log("Query API: professor search", results);
 
-  console.log("Professors:", professors, "\n");
-
-  responseContent = {
+  const responseContent = {
     role: "user",
     content: JSON.stringify({
       introduction: "Here are some professors based on your query.",
-      professors,
-      conclusion: professors.length
-        ? "Let me know if you need more information or other recommendations."
-        : "No professors matched your query. Please refine your search or try different criteria.",
+      isProfessorQuery: true,
+      professors: results,
+      conclusion:
+        "Let me know if you need more information or other recommendations.",
     }),
   };
 
   // Return the final response content
   const completion = await openai.chat.completions.create({
-    messages: [
-      { role: "system", content: systemPrompt },
-      ...data,
-      responseContent,
-    ],
+    messages: [{ role: "system", content: systemPrompt }, responseContent],
     model: "gpt-4o-mini",
     stream: true,
   });
@@ -132,6 +109,10 @@ export async function POST(req: NextRequest) {
   });
 
   return new NextResponse(stream, {
-    headers: { "Content-Type": "text/plain" },
+    headers: {
+      "Content-Type": "text/plain",
+    },
   });
+
+  return NextResponse.json({ message: "Success" });
 }

@@ -37,9 +37,11 @@ export async function POST(req: NextRequest) {
     const openai = new OpenAI();
 
     // Create a summary of the professor
-    const summary = `Professor ${professorName} teaches '${subject}' with an overall rating of ${
+    const summary = `Professor ${professorName} who teaches '${subject}' with an overall rating of ${
       stars || "N/A"
     }. Sample reviews: ${reviews.slice(0, 3).join(" ")}`;
+
+    console.log("Prompt summary:", summary);
 
     const pineReviws = reviews.slice(0, 3).join(" ");
 
@@ -48,7 +50,6 @@ export async function POST(req: NextRequest) {
     const embedding = await openai.embeddings.create({
       model: "text-embedding-3-small",
       input: summary,
-      encoding_format: "float",
     });
 
     // Ensure we have a valid embedding
@@ -62,11 +63,11 @@ export async function POST(req: NextRequest) {
         id: professorName.replace(/\s+/g, "_").toLowerCase(),
         values: embedding.data[0].embedding,
         metadata: {
-          professor: professorName,
+          professorName: professorName,
           subject: subject || "Unknown",
           stars: stars || "N/A",
           summary,
-          review: pineReviws,
+          reviews: pineReviws,
         },
       },
     ]);

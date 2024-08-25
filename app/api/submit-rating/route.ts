@@ -31,12 +31,19 @@ export async function POST(req: NextRequest) {
     const openai = new OpenAI();
 
     // Create the prompt based on the review data
-    const prompt = `Review of Professor ${reviewData.professorName}, who teaches ${reviewData.subject}. Rating: ${reviewData.stars}/5. Review: "${reviewData.review}"`;
+    const prompt = `Professor ${reviewData.professorName}, who teaches '${
+      reviewData.subject
+    }' with an overall rating of ${
+      reviewData.stars || "N/A"
+    } stars. Sample reviews: ${reviewData.review}`;
+
+    console.log("Submit rating Prompt:", prompt);
 
     // Generate embedding from OpenAI
     const embedding = await openai.embeddings.create({
-      model: "text-embedding-ada-002",
+      model: "text-embedding-3-small",
       input: prompt,
+      encoding_format: "float",
     });
 
     // Define the Pinecone index and namespace
@@ -50,16 +57,15 @@ export async function POST(req: NextRequest) {
           .toLowerCase()}_${Date.now()}`,
         values: embedding.data[0].embedding,
         metadata: {
-          professor: reviewData.professorName,
+          professorName: reviewData.professorName,
           subject: reviewData.subject,
           stars: reviewData.stars,
-          review: reviewData.review,
+          reviews: reviewData.review,
           type: "professor_rating",
         },
       },
     ]);
 
-    console.log("Upsert response:", upsertResponse);
     return NextResponse.json({
       message: `Professor ${reviewData.professorName} rated successfully`,
     });

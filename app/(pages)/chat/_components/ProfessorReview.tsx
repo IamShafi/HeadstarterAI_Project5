@@ -14,13 +14,21 @@ const validationSchema = Yup.object({
 
 const ProfessorReview: React.FC = () => {
   const [url, setUrl] = React.useState<string>("");
-  const { setMessages, setChatIsBusy, chatIsBusy } = useChat();
+  const { setMessages, setChatIsBusy, chatIsBusy, messages } = useChat();
   const [rateMyProfessorLoading, setRateMyProfessorLoading] =
     React.useState<boolean>(false);
   const [rateMyProfessorError, setRateMyProfessorError] = React.useState<
     string | null
   >(null);
   const [ratingError, setRatingError] = React.useState<string | null>(null);
+  const [searchProfessorName, setSearchProfessorName] = React.useState("");
+  const [searchSubject, setSearchSubject] = React.useState("");
+  const [searchRating, setSearchRating] = React.useState<string | undefined>(
+    undefined
+  );
+  const [seachResultError, setSearchResultError] = React.useState<
+    string | null
+  >();
 
   const submitRateMyProfessor = (url: string) => {
     if (chatIsBusy) return;
@@ -55,27 +63,24 @@ const ProfessorReview: React.FC = () => {
       })
       .finally(() => {
         setRateMyProfessorLoading(false);
+        setChatIsBusy(false);
       });
   };
 
   const initialValues = {
     professorName: "",
     subject: "",
-    rating: null,
+    rating: "",
     professorReview: "",
     url: "",
   };
 
-  const searchForProfessors = () => {
-    if (chatIsBusy) return;
-
-    setChatIsBusy(true);
-    console.log("Searching for professors");
-    setChatIsBusy(false);
-  };
   const onSubmit = (
     values: typeof initialValues,
-    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
+    {
+      setSubmitting,
+      resetForm,
+    }: { setSubmitting: (isSubmitting: boolean) => void; resetForm: () => void }
   ) => {
     if (chatIsBusy) return;
 
@@ -108,15 +113,129 @@ const ProfessorReview: React.FC = () => {
           ...messages,
           {
             role: "assistant",
-            content: `Professor ${data.professorName} rated successfully ✅
+            content: `Professor ${values.professorName} rated successfully ✅
         `,
           },
         ]);
       })
+      .catch((error) => {
+        console.error("Error submitting rating:", error);
+        setRatingError("An error occurred");
+      })
       .finally(() => {
         setChatIsBusy(false);
         setSubmitting(false);
+        resetForm();
+
+        // Reset form values
       });
+  };
+
+  const searchForProfessors = async () => {
+    setSearchResultError(null);
+
+    if (!searchProfessorName && !searchSubject && !searchRating) {
+      setSearchResultError("Please provide a valid search query");
+      return;
+    }
+
+    if (chatIsBusy) return;
+
+    console.log("searching...");
+
+    let promptQuery = "";
+    switch (true) {
+      case searchProfessorName !== "" &&
+        searchSubject !== "" &&
+        searchRating !== "":
+        promptQuery = `Searching for Professor ${searchProfessorName} who teaches ${searchSubject} with an overall rating of ${searchRating}`;
+        break;
+      case searchProfessorName !== "" &&
+        searchSubject !== "" &&
+        searchRating === "":
+        promptQuery = `Searching for Professor ${searchProfessorName} who teaches ${searchSubject}`;
+        break;
+      case searchSubject !== "" &&
+        searchRating !== "" &&
+        searchProfessorName === "":
+        promptQuery = `Searching for Professors who teach ${searchSubject} with an overall rating of ${searchRating} stars`;
+        break;
+      case searchProfessorName !== "" &&
+        searchRating !== "" &&
+        searchSubject === "":
+        promptQuery = `Searching for Professor ${searchProfessorName} with an overall rating of ${searchRating} stars`;
+        break;
+      case searchProfessorName !== "" &&
+        searchSubject === "" &&
+        searchRating === "":
+        promptQuery = `Searching for Professor ${searchProfessorName}`;
+        break;
+      case searchSubject !== "" &&
+        searchProfessorName === "" &&
+        searchRating === "":
+        promptQuery = `Searching for Professors who teach ${searchSubject}`;
+        break;
+      case searchRating !== "" &&
+        searchProfessorName === "" &&
+        searchSubject === "":
+        promptQuery = `Searching for Professors with an overall rating of ${searchRating} stars`;
+        break;
+      default:
+        promptQuery = "Please provide a valid search query";
+        return;
+    }
+
+    console.log("searching...2");
+
+    setMessages((messages) => [
+      ...messages,
+      { role: "user", content: promptQuery },
+      { role: "assistant", content: "Typing..." },
+    ]);
+
+    setChatIsBusy(true);
+
+    try {
+      const response = await fetch("/api/search-query", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ message: promptQuery }),
+      });
+
+      const reader = response.body?.getReader();
+      const decoder = new TextDecoder();
+      let fullText = "";
+
+      if (reader) {
+        // Read the streamed data
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) {
+            break;
+          }
+          const text = decoder.decode(value || new Uint8Array(), {
+            stream: true,
+          });
+          fullText += text; // Accumulate the streamed data
+        }
+      }
+
+      setMessages((messages) => {
+        const otherMessages = messages.slice(0, -1);
+        const lastMessage = messages[messages.length - 1];
+        return [...otherMessages, { ...lastMessage, content: fullText }];
+      });
+    } catch (err) {
+      console.error("Error fetching response:", err);
+      setSearchResultError("There has been an error");
+    } finally {
+      setChatIsBusy(false);
+      setSearchProfessorName("");
+      setSearchSubject("");
+      setSearchRating("");
+    }
   };
 
   return (
@@ -178,25 +297,32 @@ const ProfessorReview: React.FC = () => {
               type="text"
               placeholder="Enter Professor Name"
               className="overflow-hidden text-[15px] grow shrink self-stretch px-4 py-2.5 my-auto text-base leading-tight w-full text-black bg-[#ADA8C4] rounded-lg w-[200px] max-md:px-5 placeholder-white"
+              value={searchProfessorName}
+              onChange={(e) => setSearchProfessorName(e.target.value)}
             />
           </div>
-          {/* <div className="flex flex-wrap gap-10 items-centerw-full mt-4 rounded-2xl border border-black border-solid max-md:max-w-full">
-            <Field
+          <div className="flex flex-wrap gap-10 items-centerw-full mt-4 rounded-2xl border border-black border-solid max-md:max-w-full">
+            <input
               type="text"
               placeholder="Enter Subject"
               className="overflow-hidden text-[16px] grow shrink self-stretch px-4 py-2.5 my-auto text-base leading-tight text-black bg-[#ADA8C4] rounded-lg w-[200px] max-md:px-5 placeholder-white"
+              value={searchSubject}
+              onChange={(e) => setSearchSubject(e.target.value)}
             />
           </div>
           <div className="flex flex-wrap gap-10 items-center w-full mt-4 rounded-2xl border border-black border-solid max-md:max-w-full">
             <label
-              htmlFor="rating"
+              htmlFor="search-rating"
               className="gap-2.5 self-stretch p-2.5 my-auto text-xl tracking-normal leading-loose text-white"
             >
               Rating (0-5)
             </label>
-            <Field
-              as="select"
+
+            <select
+              id="search-rating"
               className="overflow-hidden text-[16px] grow shrink self-stretch px-4 py-2.5 my-auto mr-3 text-base leading-tight text-black bg-[#ADA8C4] rounded-lg w-[100px] max-md:px-5 placeholder-white"
+              value={searchRating ?? ""} // Use empty string if searchRating is null or undefined
+              onChange={(e) => setSearchRating(e.target.value)}
             >
               <option value="">Select</option>
               <option value={0}>0</option>
@@ -205,20 +331,17 @@ const ProfessorReview: React.FC = () => {
               <option value={3}>3</option>
               <option value={4}>4</option>
               <option value={5}>5</option>
-            </Field>
+            </select>
           </div>
-          <div className="mt-8">
-            <Field
-              as="textarea"
-              placeholder="Write your review for this professor"
-              className="overflow-y-auto text-[24px] px-6 pt-5 pb-10 text-base leading-tight text-black bg-gray-400 rounded-2xl max-md:px-5 max-md:max-w-full w-full placeholder-white"
-            />
-          </div> */}
+          {seachResultError && (
+            <div className="text-red-500">{seachResultError}</div>
+          )}
           <button
-            type="submit"
-            className={`overflow-hidden self-center px-16 py-3.5 mt-8 max-w-full text-2l font-semibold leading-tight text-white whitespace-nowrap rounded-2xl w-full max-md:px-5 flex justify-center items-center gap-2`}
+            type="button"
+            onClick={searchForProfessors}
+            className={`overflow-hidden self-center px-16 py-3.5 mt-8 max-w-full text-2l font-semibold leading-tight text-white whitespace-nowrap rounded-2xl w-full max-md:px-5 flex justify-center items-center gap-2 bg-red-400`}
           >
-            Search
+            Submit
           </button>
         </div>
       </div>
@@ -276,7 +399,7 @@ const ProfessorReview: React.FC = () => {
                   name="rating"
                   className="overflow-hidden text-[16px] grow shrink self-stretch px-4 py-2.5 my-auto mr-3 text-base leading-tight text-black bg-[#ADA8C4] rounded-lg w-[100px] max-md:px-5 placeholder-white"
                 >
-                  <option value="">Select</option>
+                  <option value={""}>Select</option>
                   <option value={0}>0</option>
                   <option value={1}>1</option>
                   <option value={2}>2</option>
